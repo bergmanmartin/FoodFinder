@@ -12,52 +12,64 @@
 
     <style type="text/css">
       #map-canvas { 
-        height: 400px;
-        width: 400px; 
+        height: 600px;
+        width: 800px;
+        margin:auto;
+        
+        
         }
+        body {
+          background-color: #212529!important;
+          color: whitesmoke
+        }
+        h1 {
+          text-align: center;
+        }
+        .row{
+          padding: 5px;
+        }
+        
+        
     </style>
-
+  
 
   </head>
-  <body>
+  <body style= "background-color: #212529!important;">
     <h1>Food Finder</h1>
     <div class="container">
         <div class="row">
-            <!-- En kolumn i grid-->
-          <div class="col-sm">
-            <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">Enter Location</label>
-                <input type='text' class="form-control" id="input" placeholder="Location">
-                <div class="col-auto">
-                    <button type="submit" class="btn btn-primary mb-3" onclick='getLocation()'>SUBMIT</button>
-                </div>
-            </div>
-            
-           
-          </div>
-          <!-- En kolumn i grid-->
-          <div class="col-sm">
-            <div class="mb-3">
-                <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-            </div>
+          <div class="col-sm-3">
+                <label for="input" class="form-label">Enter Location</label>
+                <input type='text' class="form-control" id="location" placeholder="Location">
+                
+                <label for="option" class="form-label">Type of food</label>
+                <select class="form-select" aria-label="Default select example" id="option">
+                  <option selected>Open this select menu</option>
+                  <option value="1">Sushi</option>
+                  <option value="2">etc</option>
+                  <option value="3">etc</option>
+                </select>
+                <button type="submit" class="btn btn-primary mb-3" onclick='getLocation()'>SUBMIT</button>
+
 
           </div>
-          <!-- En kolumn i grid-->
-        
-          <div id="map-canvas">
-          </div>
-            
-          </div>
+          <div class="col-auto" id="map-canvas"></div>
         </div>
-      </div>
+    </div>
+         
+
+           
+          
+         
+        
+         
+            
+          
+        
+      
       
     
     
-    
-    <!-- Optional JavaScript; choose one of the two! -->
-
-    <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA76-p_SC_FBP2Fp7uTzXYaH-LBEX-AKho&libraries=places">
     </script>
     <script>
