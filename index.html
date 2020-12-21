@@ -27,7 +27,7 @@
           <div class="col-sm">
             <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Enter Location</label>
-                <input type='text' class="form-control" id="input" placeholder="Location">
+                <input type='text' class="form-control" id="location" placeholder="Location">
                 <div class="col-auto">
                     <button type="submit" class="btn btn-primary mb-3" onclick='getLocation()'>SUBMIT</button>
                 </div>
@@ -60,16 +60,16 @@
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA76-p_SC_FBP2Fp7uTzXYaH-LBEX-AKho&libraries=places">
     </script>
-    <script>
-    
-      var map = new google.maps.Map(document.getElementById('map-canvas'), {
-        center: {
+    <script type ="text/javascript">
+    var YWSID = "[x8XCchd9ohJ6WkXQcoa_Fx3sGIK1Ed8zJRiMJV-NMp9dZbGfL5_CgqU73kZQArJ1DG26MG3rmou6gmw4RVetGvz7Fwi89TU944v9ecNsLDPk9hJDjsPD0BWha1rcX3Yx]";
+    var searchBox = new google.maps.places.SearchBox(document.getElementById('location'));
+    var map = new google.maps.Map(document.getElementById('map-canvas'), {    
+      center: {
           lat: 27.72,
           lng: 85.36
         },
         zoom:15
       });
-
       var marker = new google.maps.Marker({
         position:{
           lat: 27.72,
@@ -78,33 +78,39 @@
         map:map,
         draggable: true
       });
-
-      var searchBox = new google.maps.places.SearchBox(document.getElementById('input'));
-
-      google.maps.event.addListener(searchBox, 'places_changed',function(){
-        
+      google.maps.event.addListener(searchBox, 'places_changed',function(){ 
         var places = searchBox.getPlaces();
-
         var bounds = new google.maps.LatLngBounds();
         var i, place;
-       
 
+    
         for(i=0; place=places[i];i++){
-
-          bounds.extend(place.geometry.location);
-          
-
+          bounds.extend(place.geometry.location);         
         }
-
         map.fitBounds(bounds);
         map.setZoom(15);
+        console.log(places);
+        var name = places[0].name;
+        fetchYelpResults(name,function(results){
 
-
+          console.log(results);
+        })
       });
+      
+
+      function fetchYelpResults(name,callback){
+        var URL = 'https://api.yelp.com/v3/businesses/search?location=' + name;
+        var key = 'x8XCchd9ohJ6WkXQcoa_Fx3sGIK1Ed8zJRiMJV-NMp9dZbGfL5_CgqU73kZQArJ1DG26MG3rmou6gmw4RVetGvz7Fwi89TU944v9ecNsLDPk9hJDjsPD0BWha1rcX3Yx';
+        var options = {headers:{'Authorization':'Bearer '+ key }}
+        
+        fetch(URL,options).then(response => response.json()).then(callback);
+      } 
     
     </script>
+
+
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous">
-      
       </script>
 
 
