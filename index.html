@@ -113,14 +113,15 @@
     </div>
          
          
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA76-p_SC_FBP2Fp7uTzXYaH-LBEX-AKho&libraries=places">
-    </script>
-    <script>
-      
-    
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA76-p_SC_FBP2Fp7uTzXYaH-LBEX-AKho&libraries=places"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+    <script type ="text/javascript">
     var YWSID = "[x8XCchd9ohJ6WkXQcoa_Fx3sGIK1Ed8zJRiMJV-NMp9dZbGfL5_CgqU73kZQArJ1DG26MG3rmou6gmw4RVetGvz7Fwi89TU944v9ecNsLDPk9hJDjsPD0BWha1rcX3Yx]";
     var searchBox = new google.maps.places.SearchBox(document.getElementById('location'));
-    var map = new google.maps.Map(document.getElementById('map-canvas'), {
+    var map = new google.maps.Map(document.getElementById('map-canvas'), {    
       center: {
           lat: 27.72,
           lng: 85.36
@@ -141,36 +142,53 @@
         var i, place;
 
 
+    
         for(i=0; place=places[i];i++){
-          bounds.extend(place.geometry.location);
+          bounds.extend(place.geometry.location);         
         }
         map.fitBounds(bounds);
         map.setZoom(15);
         console.log(places);
         var name = places[0].name;
         fetchYelpResults(name,function(results){
+          var resturants = results.businesses.slice(0,9);
 
+          resturants.forEach(addResturant);
           console.log(results);
+          console.log(resturants.rating);
         })
-      });
 
+      });
+      
+      function addResturant(resturant){
+       var marker = new google.maps.Marker({
+         position:{
+           lat: resturant.coordinates.latitude,
+           lng: resturant.coordinates.longitude
+         },
+         map:map
+
+
+       });
+      }
 
       function fetchYelpResults(name,callback){
-        var URL = 'https://api.yelp.com/v3/businesses/search?location=' + name;
+        var URL = 'https://cors-anywhere.herokuapp.com/'+'https://api.yelp.com/v3/businesses/search?location=' + name;
         var key = 'x8XCchd9ohJ6WkXQcoa_Fx3sGIK1Ed8zJRiMJV-NMp9dZbGfL5_CgqU73kZQArJ1DG26MG3rmou6gmw4RVetGvz7Fwi89TU944v9ecNsLDPk9hJDjsPD0BWha1rcX3Yx';
         var options = {headers:{'Authorization':'Bearer '+ key }}
-
+        
         fetch(URL,options).then(response => response.json()).then(callback);
-      } 
+
+      }
 
       
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous">
-      var scrollSpy = new bootstrap.ScrollSpy(document.body, {
-      target: '#navbar-example'
-      })
-      
-      </script>
+
+
+    
+    <script>
+
+</script>
 
 
   </body>
