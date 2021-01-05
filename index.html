@@ -33,6 +33,14 @@
           height: 150px;
           width: 200px;
         }
+        a {
+          color: inherit;
+          text-decoration: inherit;
+        }
+        .collapse {
+          color: black;
+          text-decoration: inherit;
+        }
         
         
     </style>
@@ -40,24 +48,30 @@
 
   </head>
   <body style= "background-color: #212529!important;" data-bs-spy="scroll" data-bs-target="#list-example">
-    <h1>Food Finder</h1>
+    <h1><a href=index.html>Food Finder</h1></a> 
     <div class="container-fluid">
         <div class="row">
-        
+          
           <!-- Första kolumnen av första raden på grid systemet -->
           <div class="col-sm-3">
-           
-                <label for="input" class="form-label">Enter Location</label>
+            
+            <form>
+              <fieldset>
+                <p>
+                  <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                    Hjälp
+                  </a>
+                </p>
+                <div class="collapse" id="collapseExample">
+                  <div class="card card-body">
+                    FoodFinder är en hemsida för att hjälpa dig att hitta resturanger i en specifik stad/ort samt se deras recensioner via yelp. Du skriver i valfri ort, sedan listas resturangerna på kartan
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label for="input" class="form-label">Enter Location</label>
                 <input type='text' class="form-control" id="location" placeholder="Location">
-                
-                <label for="option" class="form-label">Type of food</label>
-                <select class="form-select" aria-label="Default select example" id="option">
-                  <option selected>Open this select menu</option>
-                  <option value="1">Sushi</option>
-                  <option value="2">etc</option>
-                  <option value="3">etc</option>
-                </select>
-                <button type="submit" class="btn btn-primary mb-3" onclick='getLocation()'>SUBMIT</button>
+              </fieldset>
+            </form>
 
 
           </div>
@@ -96,25 +110,13 @@
             </div>
           </div>
         </div>
-        <span class="yelp-review" data-review-id="1WhqJTTe3aPLPW8vFp9q5w" data-hostname="www.yelp.com">Read <a href="https://www.yelp.com/user_details?userid=yO64UOeRmaUId5ArgqBDSA" rel="nofollow noopener">Dan A.</a>'s <a href="https://www.yelp.com/biz/ihsiri-lund?hrid=1WhqJTTe3aPLPW8vFp9q5w" rel="nofollow noopener">review</a> of <a href="https://www.yelp.com/biz/ebflqhc_UVM_hIWkqws1QQ" rel="nofollow noopener">Ihsiri</a> on <a href="https://www.yelp.com" rel="nofollow noopener">Yelp</a><script src="https://www.yelp.com/embed/widgets.js" type="text/javascript" async></script></span>
     </div>
          
-
-           
-          
          
-        
-         
-            
-          
-        
-      
-      
-    
-    
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA76-p_SC_FBP2Fp7uTzXYaH-LBEX-AKho&libraries=places">
     </script>
     <script>
+      
     
     var YWSID = "[x8XCchd9ohJ6WkXQcoa_Fx3sGIK1Ed8zJRiMJV-NMp9dZbGfL5_CgqU73kZQArJ1DG26MG3rmou6gmw4RVetGvz7Fwi89TU944v9ecNsLDPk9hJDjsPD0BWha1rcX3Yx]";
     var searchBox = new google.maps.places.SearchBox(document.getElementById('location'));
@@ -160,6 +162,8 @@
 
         fetch(URL,options).then(response => response.json()).then(callback);
       } 
+
+      
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous">
       var scrollSpy = new bootstrap.ScrollSpy(document.body, {
