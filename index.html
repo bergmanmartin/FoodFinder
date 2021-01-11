@@ -37,7 +37,7 @@
           color: inherit;
           text-decoration: inherit;
         }
-        .collapse {
+        .card {
           color: black;
           text-decoration: inherit;
         }
@@ -57,14 +57,10 @@
             
             <form>
               <fieldset>
-                <p>
-                  <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                    Hjälp
-                  </a>
-                </p>
-                <div class="collapse" id="collapseExample">
-                  <div class="card card-body">
-                    FoodFinder är en hemsida för att hjälpa dig att hitta resturanger i en specifik stad/ort samt se deras recensioner via yelp. Du skriver i valfri ort, sedan listas resturangerna på kartan
+                <div class="card" style="width: 18rem;">
+                  <div class="card-body">
+                    <h5 class="card-title">Info</h5>
+                    <p class="card-text">Write a city/location in the searchbar to find nearby resturants. Example 'Ystad'.</p>
                   </div>
                 </div>
                 <div class="mb-3">
@@ -72,8 +68,8 @@
                 <input type='text' class="form-control" id="location" placeholder="Location">
               </fieldset>
             </form>
-
-
+          
+          
           </div>
           <!-- Andra kolumnen av första raden på grid systemet -->
           <div class="col-sm-auto" id="map-canvas"></div>
@@ -88,12 +84,15 @@
     </div>
          
          
-    <!-- Option 1: Bootstrap Bundle with Popper -->
+    
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA76-p_SC_FBP2Fp7uTzXYaH-LBEX-AKho&libraries=places"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    
 
     <script type ="text/javascript">
+    //Initierar google maps och hårdkodar in en bestämd plats för att visa kartan.
+    
     var YWSID = "[x8XCchd9ohJ6WkXQcoa_Fx3sGIK1Ed8zJRiMJV-NMp9dZbGfL5_CgqU73kZQArJ1DG26MG3rmou6gmw4RVetGvz7Fwi89TU944v9ecNsLDPk9hJDjsPD0BWha1rcX3Yx]";
     var searchBox = new google.maps.places.SearchBox(document.getElementById('location'));
     var map = new google.maps.Map(document.getElementById('map-canvas'), {    
@@ -103,6 +102,9 @@
         },
         zoom:15
       });
+
+      //initierar en google maps marker och gör mapen dragbar.
+
       var marker = new google.maps.Marker({
         position:{
           lat: 27.72,
@@ -111,20 +113,25 @@
         map:map,
         draggable: true
       });
+
+      //Initierar en listener till vårt sökfält som ger möjliga alternativ till vårt input och ändrar sedan kartan därefter.
+
       google.maps.event.addListener(searchBox, 'places_changed',function(){ 
         var places = searchBox.getPlaces();
         var bounds = new google.maps.LatLngBounds();
         var i, place;
 
-
-    
         for(i=0; place=places[i];i++){
           bounds.extend(place.geometry.location);         
         }
+
         map.fitBounds(bounds);
         map.setZoom(15);
         console.log(places);
         var name = places[0].name;
+
+        //Hämtar resturanger från yelps databas i form av en array. Vi delar arrayen till 10 element.
+
         fetchYelpResults(name,function(results){
           $('#resturants').empty();
           var resturants = results.businesses.slice(0,9);
@@ -140,7 +147,8 @@
       });
 
     
-      
+      //Lägger till en marker för varje restaurang i arrayen och sätter ut en siffra som label på markern.
+
       function addResturant(resturant,index){
        var marker = new google.maps.Marker({
          position:{
@@ -154,6 +162,8 @@
          
        });
       }
+
+      //Lägger till restauranger i en lista med deras specifika siffror.
 
       function displayResturants(resturant,index){
         var name = resturant.name;
@@ -172,21 +182,26 @@
         $('#resturants').append(html);
       }
 
+      //Hämtar data från Yelp med en request till deras API.
+
       function fetchYelpResults(name,callback){
         var URL = 'https://cors-anywhere.herokuapp.com/'+'https://api.yelp.com/v3/businesses/search?location=' + name;
         var key = 'x8XCchd9ohJ6WkXQcoa_Fx3sGIK1Ed8zJRiMJV-NMp9dZbGfL5_CgqU73kZQArJ1DG26MG3rmou6gmw4RVetGvz7Fwi89TU944v9ecNsLDPk9hJDjsPD0BWha1rcX3Yx';
         var options = {headers:{'Authorization':'Bearer '+ key }}
         
+        
         fetch(URL,options).then(response => response.json()).then(callback);
 
       }
+
+
 
       
     </script>
 
 
     
-    <script>
+<script>
 
 </script>
 
